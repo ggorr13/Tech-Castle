@@ -12,8 +12,8 @@
 
 1. Clone the repository:
    ```sh
-   git clone <repository-url>
-   cd <project-folder>
+   git clone https://github.com/ggorr13/Tech-Castle.git
+   cd tech-castle
    ```
 
 2. Install dependencies:
@@ -48,8 +48,7 @@ This project uses Laravel Sanctum for authentication. To obtain an authenticatio
 ```sh
   POST /api/login
 ```
-email: user@gmail.com, password: password
-email: admin@gmail.com, password
+email: admin@gmail.com, password: password
 
 ## User Roles & Permissions
 
