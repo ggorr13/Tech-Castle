@@ -2,9 +2,9 @@
 
 ## Requirements
 
-- **PHP Version**: ^8.2
-- **Laravel Version**: ^12.0
-- **Packages Used**:
+- **PHP Version**: 8.2
+- **Laravel Version**: 12.0
+- **Used Packages**:
     - `laravel/sanctum` (^4.0) - API authentication
     - `spatie/laravel-permission` (^6.16) - Role and permission management
 
