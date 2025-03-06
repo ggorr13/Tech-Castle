@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->string('type'); // 'physical' or 'digital'
-            $table->decimal('price_with_tax', 8, 2)->nullable(); // Nullable to calculate on demand
+            $table->decimal('price_with_tax', 8, 2)->nullable();
 
             // Physical product properties
             $table->decimal('weight', 8, 2)->nullable();
