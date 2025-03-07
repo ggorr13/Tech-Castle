@@ -44,9 +44,8 @@ class AuthService
         return ['token' => $token, 'user' => $user];
     }
 
-    public function logout(): bool
+    public function logout(User $user): bool
     {
-        $user = Auth::user();
         return $this->authRepository->logout($user);
     }
 }
