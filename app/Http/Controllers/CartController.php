@@ -19,7 +19,9 @@ class CartController extends Controller
     {
         try {
             $payload = $request->validated();
+            // $quantity could be not declared as you use it only once
             $quantity = $payload['quantity'];
+            // In this case it's a good Idea to have $userId variable as you use it more than once
             $userId = Auth::id();
 
             $this->cartService->addToCart($userId, $productId, $quantity);

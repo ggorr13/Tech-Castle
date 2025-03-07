@@ -25,6 +25,7 @@ class AddToCartRequest extends FormRequest
                 'required',
                 'integer',
                 'min:1',
+                // It's always a good idea to move it into Rule class
                 function ($attribute, $value, $fail) {
                     $productId = $this->route('productId');
                     $product = $this->productService->getProductById($productId);
