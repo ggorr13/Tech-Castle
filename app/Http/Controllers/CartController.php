@@ -18,7 +18,8 @@ class CartController extends Controller
     public function addToCart(AddToCartRequest $request, int $productId): JsonResponse
     {
         try {
-            $quantity = $request->validated()['quantity'];
+            $payload = $request->validated();
+            $quantity = $payload['quantity'];
             $userId = Auth::id();
 
             $this->cartService->addToCart($userId, $productId, $quantity);
