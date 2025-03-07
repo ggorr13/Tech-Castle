@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Services\UserService;
+use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Exception;
 
 class AuthController extends Controller
 {
-    public function __construct(private UserService $userService)
+    public function __construct(
+        private AuthService $authService
+    )
     {
     }
 
@@ -19,7 +21,7 @@ class AuthController extends Controller
     {
         try {
             $payload = $request->validated();
-            $user = $this->userService->register($payload);
+            $user = $this->authService->register($payload);
 
             return response()->json(['message' => 'User registered successfully', 'user' => $user], 201);
         } catch (Exception $e) {
@@ -31,7 +33,7 @@ class AuthController extends Controller
     {
         try {
             $payload = $request->validated();
-            $data = $this->userService->login($payload);
+            $data = $this->authService->login($payload);
 
             return response()->json($data, 200);
         } catch (Exception $e) {
@@ -53,7 +55,7 @@ class AuthController extends Controller
     {
         try {
             $user = $request->user();
-            $this->userService->logout($user);
+            $this->authService->logout($user);
 
             return response()->json(['message' => 'Logged out successfully']);
         } catch (Exception $e) {
