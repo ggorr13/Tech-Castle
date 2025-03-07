@@ -9,6 +9,7 @@ class ProductRequest extends FormRequest
 
     public function authorize(): bool
     {
+        // I'd prefer using policies
         return auth()->user()->hasRole('admin');
     }
 

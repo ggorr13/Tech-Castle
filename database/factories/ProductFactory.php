@@ -22,6 +22,9 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 5, 100),
             'quantity' => $this->faker->numberBetween(1, 50),
             'type' => $this->faker->randomElement(['physical', 'digital']),
+            // Based on generated type the other properties could be null or something else
+            // For example we would not have a weight, width... for digital products
+            // but will have download_url
             'price_with_tax' => null,
             'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'width' => $this->faker->randomFloat(2, 1, 100),

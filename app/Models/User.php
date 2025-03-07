@@ -10,6 +10,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * Annotations are very important during development process
+ * They help a lot while coding
+ * @property int id
+ * @property string name
+ * @property BelongsToMany|Product[] cart
+ * @property HasMany|Order[] orders
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens, HasRoles;

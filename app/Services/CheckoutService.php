@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Models\User;
 use Exception;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutService
@@ -21,6 +23,7 @@ class CheckoutService
      */
     public function checkout(): Order
     {
+        /** @var User|Authenticatable|null $user */
         $user = Auth::user();
         // Get the user's cart
         $carts = $user->cart;
