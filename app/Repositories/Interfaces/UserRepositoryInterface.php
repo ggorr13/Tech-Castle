@@ -10,7 +10,5 @@ interface UserRepositoryInterface
 
     public function findByEmail(string $email): ?User;
 
-    public function logout(User $user): bool;
-
     public function find(int $id): ?User;
 }

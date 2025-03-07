@@ -18,11 +18,6 @@ class UserRepository implements UserRepositoryInterface
         return User::query()->where('email', $email)->first();
     }
 
-    public function logout(User $user): bool
-    {
-        return $user->tokens()->delete();
-    }
-
     public function find(int $id): ?User
     {
         return User::query()->find($id);
