@@ -19,7 +19,7 @@ return new class extends Migration
             // Better to use decimals, as shop can sell 560.20 g sugar or whatever
             $table->integer('quantity');
             // this is the exact place where enum could be used
-            $table->string('type'); // 'physical' or 'digital'
+            $table->enum('type',['physical', 'digital']); // 'physical' or 'digital'
             $table->decimal('price_with_tax', 8, 2)->nullable();
 
             // Physical product properties
