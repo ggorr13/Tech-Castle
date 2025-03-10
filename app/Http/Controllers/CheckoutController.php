@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\CheckoutService;
+use App\Adapters\ResponseAdapter;
 use Illuminate\Http\JsonResponse;
 
 class CheckoutController extends Controller
@@ -16,13 +17,13 @@ class CheckoutController extends Controller
         try {
             $order = $this->checkoutService->checkout();
 
-            return response()->json([
-                'message' => 'Order placed successfully.',
-                'order' => $order->load('products'),
-            ], 201);
-
+            return ResponseAdapter::success(
+                $order->load('products'),
+                __('messages.order_placed'),
+                201
+            );
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error(__('messages.checkout_failed'));
         }
     }
 }

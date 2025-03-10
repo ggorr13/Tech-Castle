@@ -4,32 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddToCartRequest;
 use App\Services\CartService;
+use App\Adapters\ResponseAdapter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-
     public function __construct(private CartService $cartService)
     {
-
     }
 
     public function addToCart(AddToCartRequest $request, int $productId): JsonResponse
     {
         try {
             $payload = $request->validated();
-            // $quantity could be not declared as you use it only once
-            $quantity = $payload['quantity'];
-            // In this case it's a good Idea to have $userId variable as you use it more than once
             $userId = Auth::id();
 
-            $this->cartService->addToCart($userId, $productId, $quantity);
+            $this->cartService->addToCart($userId, $productId, $payload['quantity']);
             $carts = $this->cartService->getCartItems($userId);
 
-            return response()->json(['message' => 'Added to cart successfully', 'carts' => $carts]);
+            return ResponseAdapter::success($carts, __('messages.added_to_cart'));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return ResponseAdapter::error($e->getMessage());
         }
     }
 
@@ -38,9 +34,9 @@ class CartController extends Controller
         try {
             $cartItems = $this->cartService->getCartItems(Auth::id());
 
-            return response()->json(['cart' => $cartItems]);
+            return ResponseAdapter::success($cartItems, __('messages.cart_retrieved'));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return ResponseAdapter::error($e->getMessage());
         }
     }
 
@@ -49,9 +45,9 @@ class CartController extends Controller
         try {
             $this->cartService->removeFromCart(Auth::id(), $productId);
 
-            return response()->json(['message' => 'Removed from cart successfully']);
+            return ResponseAdapter::success(null, __('messages.removed_from_cart'));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 400);
+            return ResponseAdapter::error($e->getMessage());
         }
     }
 }

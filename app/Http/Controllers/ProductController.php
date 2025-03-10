@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Services\ProductService;
+use App\Adapters\ResponseAdapter;
 use Illuminate\Http\JsonResponse;
 use Exception;
 
@@ -18,9 +19,9 @@ class ProductController extends Controller
         try {
             $products = $this->productService->getAllPaginate();
 
-            return response()->json(['products' => $products], 200);
+            return ResponseAdapter::success($products, __('messages.product_fetch_failed'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error(__('messages.product_fetch_failed'));
         }
     }
 
@@ -29,9 +30,9 @@ class ProductController extends Controller
         try {
             $product = $this->productService->getProductById($id);
 
-            return response()->json(['product' => $product], 200);
+            return ResponseAdapter::success($product);
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error(__('messages.product_not_found'));
         }
     }
 
@@ -41,9 +42,9 @@ class ProductController extends Controller
             $payload = $request->validated();
             $product = $this->productService->createProduct($payload);
 
-            return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
+            return ResponseAdapter::success($product, __('messages.product_created'), 201);
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error($e->getMessage());
         }
     }
 
@@ -53,9 +54,9 @@ class ProductController extends Controller
             $validated = $request->validated();
             $this->productService->updateProduct($id, $validated);
 
-            return response()->json(['message' => 'Product updated successfully'], 200);
+            return ResponseAdapter::success([], __('messages.product_updated'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error($e->getMessage());
         }
     }
 
@@ -64,9 +65,9 @@ class ProductController extends Controller
         try {
             $this->productService->deleteProduct($id);
 
-            return response()->json(['message' => 'Product deleted successfully'], 200);
+            return ResponseAdapter::success([], __('messages.product_deleted'));
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error($e->getMessage());
         }
     }
 
@@ -75,9 +76,9 @@ class ProductController extends Controller
         try {
             $products = $this->productService->getAllProducts();
 
-            return response()->json(['products' => $products], 200);
+            return ResponseAdapter::success($products);
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return ResponseAdapter::error(__('messages.product_fetch_failed'));
         }
     }
 }
